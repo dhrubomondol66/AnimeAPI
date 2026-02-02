@@ -321,7 +321,7 @@ async def list_models():
 
 @app.post("/transform")
 async def transform_to_anime(
-    file: UploadFile = File(..., description="Image file to transform (JPEG, PNG)"),
+    file: UploadFile = File(..., description="Image file to transform (JPEG, PNG, WebP)"),
     style: AnimeStyle = Query(
         default=AnimeStyle.SHINKAI,
         description="Anime style to use"
@@ -336,13 +336,13 @@ async def transform_to_anime(
     
     Upload an image and receive an anime-styled version back.
     
-    - **file**: The image file to transform (JPEG or PNG)
+    - **file**: The image file to transform (JPEG, PNG, or WebP)
     - **style**: The anime style (Shinkai, Hayao, or Paprika)
     - **enhancement**: The enhancement level (basic, enhanced, with_lines, maximum)
     """
     
     # Validate file type
-    allowed_types = ["image/jpeg", "image/png", "image/jpg"]
+    allowed_types = ["image/jpeg", "image/png", "image/jpg", "image/webp"]
     if file.content_type not in allowed_types:
         raise HTTPException(
             status_code=400,
@@ -402,7 +402,7 @@ async def transform_to_anime(
 
 @app.post("/transform/all")
 async def transform_to_anime_all_versions(
-    file: UploadFile = File(..., description="Image file to transform (JPEG, PNG)"),
+    file: UploadFile = File(..., description="Image file to transform (JPEG, PNG, WebP)"),
     style: AnimeStyle = Query(
         default=AnimeStyle.SHINKAI,
         description="Anime style to use"
@@ -418,7 +418,7 @@ async def transform_to_anime_all_versions(
     """
     
     # Validate file type
-    allowed_types = ["image/jpeg", "image/png", "image/jpg"]
+    allowed_types = ["image/jpeg", "image/png", "image/jpg", "image/webp"]
     if file.content_type not in allowed_types:
         raise HTTPException(
             status_code=400,
